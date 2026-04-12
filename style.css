@@ -1,0 +1,230 @@
+/* ─── Reset & Tokens ───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #f5f0e8;
+  --surface:   #fff9f0;
+  --border:    #d4b896;
+  --text:      #2c1a08;
+  --text-muted:#7a5a3a;
+  --accent:    #c0763a;
+  --accent-dk: #954f1c;
+  --shadow:    rgba(90, 50, 10, 0.15);
+  --radius:    8px;
+}
+
+body.dark {
+  --bg:        #1a1210;
+  --surface:   #241a14;
+  --border:    #5a3e28;
+  --text:      #f0e0c8;
+  --text-muted:#a08060;
+  --accent:    #d4884a;
+  --accent-dk: #b06030;
+  --shadow:    rgba(0,0,0,0.4);
+}
+
+body {
+  font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 6px var(--shadow);
+}
+
+.app-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-dk);
+}
+
+.header-actions { display: flex; gap: 8px; }
+
+/* ─── Buttons ──────────────────────────────────────────────────────────────── */
+.btn {
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.btn:hover { background: var(--border); }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent-dk);
+  color: #fff;
+  font-weight: 600;
+}
+.btn-primary:hover { background: var(--accent-dk); }
+
+.btn-sm { padding: 5px 10px; font-size: 0.82rem; }
+
+.button-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* ─── Main layout ──────────────────────────────────────────────────────────── */
+.app-main {
+  display: flex;
+  flex: 1;
+  gap: 16px;
+  padding: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* ─── Controls sidebar ─────────────────────────────────────────────────────── */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 180px;
+  max-width: 220px;
+  flex: 0 0 auto;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.control-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.select {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* ─── Status & Thinking ────────────────────────────────────────────────────── */
+.status-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-dk);
+  min-height: 1.4em;
+}
+
+.thinking {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ─── History ──────────────────────────────────────────────────────────────── */
+.history-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.history-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  max-height: 280px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  counter-reset: none;
+}
+
+.history-list li {
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.history-list li:last-child {
+  background: var(--border);
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ─── Board canvas ─────────────────────────────────────────────────────────── */
+.board-section {
+  flex: 1 1 300px;
+  display: flex;
+  justify-content: center;
+}
+
+.board-canvas {
+  display: block;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px var(--shadow);
+  cursor: crosshair;
+  touch-action: none;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .app-main {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .controls {
+    max-width: 100%;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+
+  .control-group { min-width: 130px; }
+
+  .history-panel {
+    width: 100%;
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .history-list { max-height: 100px; }
+}
