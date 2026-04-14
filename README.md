@@ -81,3 +81,10 @@ gomoku-ai/
 ## License
 
 MIT © 2026 SEN LLC (SEN 合同会社)
+
+<!-- sen-publish:links -->
+## Links
+
+- 🌐 Demo: https://sen.ltd/portfolio/gomoku-ai/
+- 📝 dev.to: https://dev.to/sendotltd/a-gomoku-ai-with-minimax-alpha-beta-pruning-and-pattern-based-evaluation-4lai
+<!-- /sen-publish:links -->
