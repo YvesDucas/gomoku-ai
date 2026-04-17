@@ -116,24 +116,31 @@ body {
 .select, .btn {
   font-family: inherit;
   font-size: 0.9rem;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
   border: 1px solid var(--border-strong);
   background: hsla(0, 0%, 100%, 0.05);
   color: var(--text-main);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.select:hover, .btn:hover {
+/* ─── Premium Button Interactions ─── */
+.btn:hover {
   background: hsla(0, 0%, 100%, 0.1);
   border-color: var(--accent);
+  color: var(--text-pure);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: translateY(-1px);
 }
 
-.select:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
+.btn:active {
+  transform: scale(0.96) translateY(0);
+  transition-duration: 0.1s;
 }
 
 .btn-primary {
@@ -141,12 +148,34 @@ body {
   color: var(--bg-deep);
   border: none;
   font-weight: 600;
+  box-shadow: 0 4px 15px var(--accent-glow);
 }
 
 .btn-primary:hover {
   background: hsl(174, 60%, 45%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px var(--accent-glow);
+  box-shadow: 0 6px 25px var(--accent-glow);
+}
+
+/* ─── Custom Select Design ─── */
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 5 3 3 3-3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+body:not(.dark) .select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 5 3 3 3-3'/%3E%3C/svg%3E");
+}
+
+.select:hover {
+  border-color: var(--accent);
+}
+
+.select option {
+  background-color: var(--bg-surface);
+  color: var(--text-pure);
 }
 
 .button-row { display: flex; gap: 0.75rem; }
@@ -154,17 +183,20 @@ body {
 /* ─── Status ───────────────────────────────────────────────────────────────── */
 .status-text {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   font-weight: 500;
   color: var(--text-pure);
-  padding: 0.5rem 0;
+  padding: 0.75rem 0;
+  transition: opacity 0.3s ease;
 }
 
 .thinking {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--accent);
-  letter-spacing: 0.05em;
-  animation: pulse 2s infinite ease-in-out;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  text-transform: uppercase;
+  animation: pulse 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 @keyframes pulse {
@@ -197,21 +229,41 @@ body {
   gap: 0.4rem;
   max-height: 300px;
   overflow-y: auto;
-  font-family: monospace;
+  font-family: inherit; /* Use Inter for better legibility */
   font-size: 0.85rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+  padding-right: 0.5rem;
+}
+
+/* Custom Scrollbar for Webkit */
+.history-list::-webkit-scrollbar {
+  width: 4px;
+}
+.history-list::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 10px;
 }
 
 .history-list li {
-  padding: 0.4rem 0.6rem;
-  border-radius: 4px;
-  background: hsla(0, 0%, 100%, 0.03);
-  border-left: 2px solid transparent;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  background: hsla(0, 0%, 100%, 0.02);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.history-list li:hover {
+  background: hsla(0, 0%, 100%, 0.05);
+  border-color: var(--border);
 }
 
 .history-list li:last-child {
-  border-left-color: var(--accent);
+  border-color: var(--accent);
   background: hsla(174, 60%, 50%, 0.1);
   color: var(--text-pure);
+  font-weight: 500;
+  box-shadow: 0 0 15px hsla(174, 60%, 50%, 0.05);
 }
 
 /* ─── Board Section ────────────────────────────────────────────────────────── */
