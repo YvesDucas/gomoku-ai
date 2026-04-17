@@ -107,29 +107,37 @@ function draw() {
     }
   }
 
-  // Win line highlight
+  // Win line highlight - Glowing Teal Trace
   if (winLine) {
-    ctx.strokeStyle = 'rgba(255, 80, 80, 0.75)';
-    ctx.lineWidth   = CELL_SIZE * 0.25;
+    ctx.save();
+    ctx.strokeStyle = DOT_COLOR;
+    ctx.lineWidth   = CELL_SIZE * 0.2;
     ctx.lineCap     = 'round';
+    ctx.shadowBlur  = 15;
+    ctx.shadowColor = DOT_COLOR;
+    
     ctx.beginPath();
     ctx.moveTo(colToX(winLine[0][1]), rowToY(winLine[0][0]));
     for (let i = 1; i < winLine.length; i++) {
       ctx.lineTo(colToX(winLine[i][1]), rowToY(winLine[i][0]));
     }
     ctx.stroke();
-    ctx.lineWidth = 1;
-    ctx.lineCap   = 'butt';
+    ctx.restore();
   }
 
-  // Last move marker
+  // Last move marker - Soft Zen Breath
   if (moveHistory.length > 0) {
     const last = moveHistory[moveHistory.length - 1];
     const x = colToX(last.col), y = rowToY(last.row);
+    ctx.save();
     ctx.beginPath();
-    ctx.arc(x, y, CELL_SIZE * 0.18, 0, Math.PI * 2);
-    ctx.fillStyle = last.player === BLACK ? 'rgba(255,255,255,0.7)' : 'rgba(0,0,0,0.5)';
-    ctx.fill();
+    ctx.arc(x, y, CELL_SIZE * 0.2, 0, Math.PI * 2);
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = DOT_COLOR;
+    ctx.strokeStyle = DOT_COLOR;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
   }
 }
 
@@ -140,23 +148,52 @@ function drawStone(row, col, player) {
   const r = CELL_SIZE * STONE_RADIUS_RATIO;
 
   ctx.save();
-  ctx.shadowColor   = 'rgba(0,0,0,0.35)';
-  ctx.shadowBlur    = r * 0.6;
-  ctx.shadowOffsetX = r * 0.15;
+  
+  // Ambient Shadow
+  ctx.shadowColor   = 'rgba(0,0,0,0.5)';
+  ctx.shadowBlur    = r * 0.5;
+  ctx.shadowOffsetX = r * 0.1;
   ctx.shadowOffsetY = r * 0.2;
 
-  const grad = ctx.createRadialGradient(x - r * 0.3, y - r * 0.3, r * 0.05, x, y, r);
+  // Main Stone Body (Gradient)
+  const offset = r * 0.3;
+  const grad = ctx.createRadialGradient(x - offset, y - offset, r * 0.1, x, y, r);
+  
   if (player === BLACK) {
-    grad.addColorStop(0, '#555');
-    grad.addColorStop(1, '#000');
+    grad.addColorStop(0, '#444');   // Highlight center
+    grad.addColorStop(0.4, '#111'); // Main body
+    grad.addColorStop(1, '#000');   // Edge
   } else {
-    grad.addColorStop(0, '#fff');
-    grad.addColorStop(1, '#ccc');
+    grad.addColorStop(0, '#fff');   // Highlight center
+    grad.addColorStop(0.5, '#eee'); // Main body
+    grad.addColorStop(1, '#bbb');   // Edge
   }
+
   ctx.beginPath();
   ctx.arc(x, y, r, 0, Math.PI * 2);
   ctx.fillStyle = grad;
   ctx.fill();
+
+  // Subtle Texture / Grain Overlay
+  ctx.globalAlpha = 0.03;
+  ctx.fillStyle = player === BLACK ? '#fff' : '#000';
+  for(let i=0; i<30; i++) {
+    const rx = (Math.random() - 0.5) * r * 1.5;
+    const ry = (Math.random() - 0.5) * r * 1.5;
+    if (Math.sqrt(rx*rx + ry*ry) < r) {
+      ctx.fillRect(x + rx, y + ry, 1, 1);
+    }
+  }
+  ctx.globalAlpha = 1.0;
+
+  // Specular Highlight (The "Shell" shine)
+  if (player === WHITE) {
+    ctx.beginPath();
+    ctx.arc(x - r * 0.4, y - r * 0.4, r * 0.1, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    ctx.fill();
+  }
+
   ctx.restore();
 }
 
