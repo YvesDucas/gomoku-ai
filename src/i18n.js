@@ -1,34 +1,34 @@
 /**
- * i18n.js — Japanese / English translations
+ * i18n.js — French / English translations
  */
 
 export const translations = {
-  ja: {
-    title:          '五目並べ AI',
-    newGame:        '新しいゲーム',
-    undo:           '待った',
-    difficulty:     '難易度',
-    easy:           '初級',
-    medium:         '中級',
-    hard:           '上級',
-    playerColor:    '手番',
-    black:          '黒（先手）',
-    white:          '白（後手）',
-    thinking:       'AI 考え中…',
-    yourTurn:       'あなたの番',
-    aiTurn:         'AI の番',
-    blackWins:      '黒の勝ち！',
-    whiteWins:      '白の勝ち！',
-    draw:           '引き分け',
-    history:        '棋譜',
-    moveN:          (n) => `${n} 手目`,
+  fr: {
+    title:          'Zen Gomoku',
+    newGame:        'Nouvelle Partie',
+    undo:           'Annuler',
+    difficulty:     'Difficulté',
+    easy:           'Débutant',
+    medium:         'Intermédiaire',
+    hard:           'Expert',
+    playerColor:    'Jouer avec',
+    black:          'Noir (1er)',
+    white:          'Blanc (2e)',
+    thinking:       'L\'IA réfléchit…',
+    yourTurn:       'À vous de jouer',
+    aiTurn:         'L\'IA réfléchit',
+    blackWins:      'Les Noirs gagnent !',
+    whiteWins:      'Les Blancs gagnent !',
+    draw:           'Égalité',
+    history:        'Historique',
+    moveN:          (n) => `Coup ${n}`,
     langToggle:     'EN',
     themeToggle:    '🌙',
     themeDark:      '🌙',
     themeLight:     '☀️',
   },
   en: {
-    title:          'Gomoku AI',
+    title:          'Zen Gomoku',
     newGame:        'New Game',
     undo:           'Undo',
     difficulty:     'Difficulty',
@@ -46,7 +46,7 @@ export const translations = {
     draw:           'Draw',
     history:        'Move History',
     moveN:          (n) => `Move ${n}`,
-    langToggle:     'JA',
+    langToggle:     'FR',
     themeToggle:    '🌙',
     themeDark:      '🌙',
     themeLight:     '☀️',
@@ -54,7 +54,7 @@ export const translations = {
 };
 
 export function t(lang, key, ...args) {
-  const v = translations[lang]?.[key] ?? translations.en[key];
+  const v = translations[lang]?.[key] ?? translations.fr[key];
   if (typeof v === 'function') return v(...args);
   return v ?? key;
 }

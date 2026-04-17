@@ -1,59 +1,61 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>五目並べ AI</title>
+  <title>Zen Gomoku</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="app-header">
-    <h1 id="app-title">五目並べ AI</h1>
-    <div class="header-actions">
-      <button id="btn-lang"  class="btn btn-sm">EN</button>
-      <button id="btn-theme" class="btn btn-sm">🌙</button>
-    </div>
-  </header>
-
-  <main class="app-main">
-    <!-- Left: controls + status -->
-    <aside class="controls">
-      <div class="control-group">
-        <label id="label-difficulty" for="sel-difficulty">難易度</label>
-        <select id="sel-difficulty" class="select">
-          <option value="easy">初級</option>
-          <option value="medium">中級</option>
-          <option value="hard" selected>上級</option>
-        </select>
+  <div class="app-container">
+    <header class="app-header">
+      <h1 id="app-title">Zen Gomoku</h1>
+      <div class="header-actions">
+        <button id="btn-lang"  class="btn btn-sm">EN</button>
+        <button id="btn-theme" class="btn btn-sm">🌙</button>
       </div>
+    </header>
 
-      <div class="control-group">
-        <label id="label-color" for="sel-color">手番</label>
-        <select id="sel-color" class="select">
-          <option value="black">黒（先手）</option>
-          <option value="white">白（後手）</option>
-        </select>
-      </div>
+    <main class="app-main">
+      <!-- Left: controls + status -->
+      <aside class="controls">
+        <div class="control-group">
+          <label id="label-difficulty" for="sel-difficulty">Difficulté</label>
+          <select id="sel-difficulty" class="select">
+            <option value="easy">Débutant</option>
+            <option value="medium">Intermédiaire</option>
+            <option value="hard" selected>Expert</option>
+          </select>
+        </div>
 
-      <div class="button-row">
-        <button id="btn-new"  class="btn btn-primary">新しいゲーム</button>
-        <button id="btn-undo" class="btn">待った</button>
-      </div>
+        <div class="control-group">
+          <label id="label-color" for="sel-color">Jouer avec</label>
+          <select id="sel-color" class="select">
+            <option value="black">Noir (1er)</option>
+            <option value="white">Blanc (2e)</option>
+          </select>
+        </div>
 
-      <div id="status" class="status-text">あなたの番</div>
-      <div id="thinking" class="thinking" hidden>AI 考え中…</div>
+        <div class="button-row">
+          <button id="btn-new"  class="btn btn-primary">Nouvelle Partie</button>
+          <button id="btn-undo" class="btn">Annuler</button>
+        </div>
 
-      <section class="history-panel">
-        <h2 id="history-title" class="history-title">棋譜</h2>
-        <ol id="history-list" class="history-list"></ol>
+        <div id="status" class="status-text">À vous de jouer</div>
+        <div id="thinking" class="thinking" hidden>L'IA réfléchit…</div>
+
+        <section class="history-panel">
+          <h2 id="history-title" class="history-title">Historique</h2>
+          <ol id="history-list" class="history-list"></ol>
+        </section>
+      </aside>
+
+      <!-- Right: board -->
+      <section class="board-section">
+        <canvas id="board-canvas" class="board-canvas"></canvas>
       </section>
-    </aside>
-
-    <!-- Right: board -->
-    <section class="board-section">
-      <canvas id="board-canvas" class="board-canvas"></canvas>
-    </section>
-  </main>
+    </main>
+  </div> <!-- .app-container -->
 
   <script type="module" src="src/main.js"></script>
 </body>

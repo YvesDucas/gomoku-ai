@@ -1,230 +1,253 @@
-/* ─── Reset & Tokens ───────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap');
+
+/* ─── Tokens & Design System ───────────────────────────────────────────────── */
+:root {
+  /* Contemporary Palette - Slate & Charcoal */
+  --bg-deep:      hsl(210, 15%, 12%);
+  --bg-surface:   hsl(210, 15%, 15%);
+  --bg-panel:     hsla(210, 15%, 20%, 0.6);
+  
+  --text-pure:    hsl(210, 20%, 98%);
+  --text-main:    hsl(210, 15%, 90%);
+  --text-muted:   hsl(210, 10%, 65%);
+  
+  --accent:       hsl(174, 60%, 50%); /* Frosted Teal */
+  --accent-glow:  hsla(174, 60%, 50%, 0.3);
+  
+  --border:       hsla(210, 15%, 100%, 0.1);
+  --border-strong:hsla(210, 15%, 100%, 0.2);
+  
+  --glass:        backdrop-filter: blur(12px);
+  --shadow-soft:  0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --radius:       12px;
+  
+  /* Layout */
+  --content-max:  1400px;
+}
+
+/* Light Mode Overlap (Minimal implementation for Zen) */
+body:not(.dark) {
+  /* We maintain a subtle "Digital Zen" look even in light mode */
+  --bg-deep:      hsl(210, 20%, 96%);
+  --bg-surface:   hsl(210, 20%, 98%);
+  --bg-panel:     hsla(210, 20%, 100%, 0.7);
+  --text-pure:    hsl(210, 15%, 10%);
+  --text-main:    hsl(210, 15%, 20%);
+  --text-muted:   hsl(210, 10%, 45%);
+  --border:       hsla(210, 15%, 0%, 0.1);
+  --border-strong:hsla(210, 15%, 0%, 0.15);
+  --shadow-soft:  0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-  --bg:        #f5f0e8;
-  --surface:   #fff9f0;
-  --border:    #d4b896;
-  --text:      #2c1a08;
-  --text-muted:#7a5a3a;
-  --accent:    #c0763a;
-  --accent-dk: #954f1c;
-  --shadow:    rgba(90, 50, 10, 0.15);
-  --radius:    8px;
-}
-
-body.dark {
-  --bg:        #1a1210;
-  --surface:   #241a14;
-  --border:    #5a3e28;
-  --text:      #f0e0c8;
-  --text-muted:#a08060;
-  --accent:    #d4884a;
-  --accent-dk: #b06030;
-  --shadow:    rgba(0,0,0,0.4);
-}
-
 body {
-  font-family: 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100dvh;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease;
+}
+
+/* ─── Ultra-Widescreen (21:9) Container ────────────────────────────────────── */
+.app-container {
+  width: 100%;
+  max-width: var(--content-max);
+  padding: 2rem;
   display: flex;
   flex-direction: column;
+  gap: 2rem;
 }
 
 /* ─── Header ───────────────────────────────────────────────────────────────── */
 .app-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
-  background: var(--surface);
+  align-items: center;
+  padding-bottom: 1rem;
   border-bottom: 1px solid var(--border);
-  box-shadow: 0 2px 6px var(--shadow);
 }
 
 .app-header h1 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--accent-dk);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-pure);
 }
 
-.header-actions { display: flex; gap: 8px; }
+.header-actions { display: flex; gap: 1rem; }
 
-/* ─── Buttons ──────────────────────────────────────────────────────────────── */
-.btn {
-  padding: 7px 14px;
+/* ─── Main Layout ──────────────────────────────────────────────────────────── */
+.app-main {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* ─── Controls (Glassmorphism Sidebar) ─────────────────────────────────────── */
+.controls {
+  background: var(--bg-panel);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-soft);
 }
-.btn:hover { background: var(--border); }
+
+.control-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.control-group label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.select, .btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  background: hsla(0, 0%, 100%, 0.05);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.select:hover, .btn:hover {
+  background: hsla(0, 0%, 100%, 0.1);
+  border-color: var(--accent);
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
 
 .btn-primary {
   background: var(--accent);
-  border-color: var(--accent-dk);
-  color: #fff;
+  color: var(--bg-deep);
+  border: none;
   font-weight: 600;
 }
-.btn-primary:hover { background: var(--accent-dk); }
 
-.btn-sm { padding: 5px 10px; font-size: 0.82rem; }
-
-.button-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+.btn-primary:hover {
+  background: hsl(174, 60%, 45%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--accent-glow);
 }
 
-/* ─── Main layout ──────────────────────────────────────────────────────────── */
-.app-main {
-  display: flex;
-  flex: 1;
-  gap: 16px;
-  padding: 16px;
-  align-items: flex-start;
-  flex-wrap: wrap;
-}
+.button-row { display: flex; gap: 0.75rem; }
 
-/* ─── Controls sidebar ─────────────────────────────────────────────────────── */
-.controls {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 180px;
-  max-width: 220px;
-  flex: 0 0 auto;
-}
-
-.control-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.control-group label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.select {
-  padding: 6px 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-/* ─── Status & Thinking ────────────────────────────────────────────────────── */
+/* ─── Status ───────────────────────────────────────────────────────────────── */
 .status-text {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--accent-dk);
-  min-height: 1.4em;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-pure);
+  padding: 0.5rem 0;
 }
 
 .thinking {
   font-size: 0.85rem;
-  color: var(--text-muted);
-  font-style: italic;
-  animation: pulse 1s ease-in-out infinite;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  animation: pulse 2s infinite ease-in-out;
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 /* ─── History ──────────────────────────────────────────────────────────────── */
 .history-panel {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 1rem;
+  margin-top: 1rem;
   border-top: 1px solid var(--border);
-  padding-top: 12px;
+  padding-top: 1.5rem;
 }
 
 .history-title {
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.1em;
 }
 
 .history-list {
   list-style: none;
-  padding: 0;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  max-height: 280px;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  counter-reset: none;
+  gap: 0.4rem;
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 0.85rem;
 }
 
 .history-list li {
-  padding: 2px 4px;
+  padding: 0.4rem 0.6rem;
   border-radius: 4px;
-}
-.history-list li:last-child {
-  background: var(--border);
-  color: var(--text);
-  font-weight: 600;
+  background: hsla(0, 0%, 100%, 0.03);
+  border-left: 2px solid transparent;
 }
 
-/* ─── Board canvas ─────────────────────────────────────────────────────────── */
+.history-list li:last-child {
+  border-left-color: var(--accent);
+  background: hsla(174, 60%, 50%, 0.1);
+  color: var(--text-pure);
+}
+
+/* ─── Board Section ────────────────────────────────────────────────────────── */
 .board-section {
-  flex: 1 1 300px;
   display: flex;
   justify-content: center;
+  perspective: 1000px;
 }
 
 .board-canvas {
-  display: block;
-  border-radius: var(--radius);
-  box-shadow: 0 4px 20px var(--shadow);
+  background: transparent;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
   cursor: crosshair;
   touch-action: none;
   max-width: 100%;
   height: auto;
+  transition: transform 0.3s ease;
 }
 
-/* ─── Mobile ───────────────────────────────────────────────────────────────── */
-@media (max-width: 600px) {
+.board-canvas:hover {
+  transform: rotateX(1deg) translateY(-2px);
+}
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
   .app-main {
-    flex-direction: column;
-    padding: 10px;
-    gap: 10px;
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
-
   .controls {
-    max-width: 100%;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-end;
+    order: 2;
   }
+}
 
-  .control-group { min-width: 130px; }
-
-  .history-panel {
-    width: 100%;
-    border-top: none;
-    padding-top: 0;
-  }
-
-  .history-list { max-height: 100px; }
+@media (max-width: 600px) {
+  .app-container { padding: 1rem; }
+  .button-row { flex-direction: column; }
 }

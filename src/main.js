@@ -15,7 +15,7 @@ let currentPlayer = BLACK;
 let playerColor = BLACK;       // human is black by default
 let difficulty = 'hard';
 let gameOver = false;
-let lang = 'ja';
+let lang = 'fr';
 let dark = false;
 let moveHistory = [];          // [{row, col, player}]
 let winLine = null;
@@ -41,7 +41,7 @@ let CANVAS_SIZE;
 
 function resize() {
   const container = canvas.parentElement;
-  const maxW = Math.min(container.clientWidth, window.innerHeight * 0.7, 560);
+  const maxW = Math.min(container.clientWidth - 40, window.innerHeight * 0.8, 900);
   CANVAS_SIZE = maxW;
   CELL_SIZE   = (CANVAS_SIZE - PADDING * 2) / (BOARD_SIZE - 1);
   canvas.width  = CANVAS_SIZE;
@@ -58,11 +58,11 @@ function xyToCell(x, y) {
 }
 
 // ── Draw ──────────────────────────────────────────────────────────────────────
-const BOARD_COLOR_LIGHT = '#DEB887';
-const BOARD_COLOR_DARK  = '#7A5230';
-const LINE_COLOR_LIGHT  = '#5a3e1b';
-const LINE_COLOR_DARK   = '#3a2010';
-const DOT_COLOR         = '#3a2010';
+const BOARD_COLOR_LIGHT = 'hsl(210, 20%, 98%)';
+const BOARD_COLOR_DARK  = 'hsl(210, 15%, 15%)';
+const LINE_COLOR_LIGHT  = 'hsla(210, 15%, 0%, 0.15)';
+const LINE_COLOR_DARK   = 'hsla(210, 15%, 100%, 0.15)';
+const DOT_COLOR         = 'hsl(174, 60%, 50%)'; // Use accent for star points
 
 function draw() {
   const boardBg = dark ? BOARD_COLOR_DARK : BOARD_COLOR_LIGHT;
@@ -352,7 +352,7 @@ colorSel.addEventListener('change', e => {
 });
 
 langBtn.addEventListener('click', () => {
-  lang = lang === 'ja' ? 'en' : 'ja';
+  lang = lang === 'fr' ? 'en' : 'fr';
   updateUI();
 });
 
