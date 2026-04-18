@@ -8,6 +8,7 @@ import {
 } from './gomoku.js';
 import { getAIMove } from './ai.js';
 import { t } from './i18n.js';
+import { audioManager } from './audio.js';
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let board = createBoard();
@@ -31,6 +32,7 @@ const langBtn  = document.getElementById('btn-lang');
 const themeBtn = document.getElementById('btn-theme');
 const newBtn   = document.getElementById('btn-new');
 const undoBtn  = document.getElementById('btn-undo');
+const audioBtn = document.getElementById('btn-audio');
 const diffSel  = document.getElementById('sel-difficulty');
 const colorSel = document.getElementById('sel-color');
 
@@ -213,8 +215,13 @@ function updateUI() {
   colorSel.options[0].text = t(lang, 'black');
   colorSel.options[1].text = t(lang, 'white');
   document.getElementById('history-title').textContent = t(lang, 'history');
+  updateAudioIcon();
   updateStatus();
   renderHistory();
+}
+
+function updateAudioIcon() {
+  audioBtn.textContent = audioManager.muted ? '🔇' : '🔊';
 }
 
 function updateStatus() {
@@ -235,6 +242,15 @@ function showResult(winner) {
     statusEl.textContent = t(lang, 'blackWins');
   } else {
     statusEl.textContent = t(lang, 'whiteWins');
+  }
+}
+
+function playOutcomeSound(winner) {
+  if (winner === null) return; // Silent for draw? Or different sound?
+  if (winner === playerColor) {
+    audioManager.playSfx('win');
+  } else {
+    audioManager.playSfx('loss');
   }
 }
 
@@ -259,6 +275,8 @@ function newGame() {
   moveHistory   = [];
   aiBusy        = false;
   thinkEl.hidden = true;
+  audioManager.resumeAmbient();
+  audioManager.playSfx('ui');
   draw();
   updateUI();
 
@@ -269,7 +287,11 @@ function newGame() {
 }
 
 function makeMove(row, col) {
-  if (gameOver || aiBusy || !isValidMove(board, row, col)) return;
+  if (gameOver || aiBusy) return;
+  if (!isValidMove(board, row, col)) {
+    audioManager.playSfx('invalid');
+    return;
+  }
   if (currentPlayer !== playerColor) return;
 
   applyMove(row, col, currentPlayer);
@@ -283,6 +305,7 @@ function makeMove(row, col) {
 function applyMove(row, col, player) {
   board = placeStone(board, row, col, player);
   moveHistory.push({ row, col, player });
+  audioManager.playSfx('stone');
   draw();
   renderHistory();
 }
@@ -293,6 +316,7 @@ function checkGameEnd(row, col, player) {
     gameOver = true;
     draw();
     showResult(player);
+    playOutcomeSound(player);
     return true;
   }
   if (isFull(board)) {
@@ -330,8 +354,11 @@ function undo() {
     // Allow undo even after game over to replay
     gameOver = false;
     winLine  = null;
+    audioManager.resumeAmbient();
   }
   if (moveHistory.length === 0) return;
+
+  audioManager.playSfx('undo');
 
   // Remove last two moves (player + AI), or one if AI hasn't moved yet
   const toRemove = moveHistory.length >= 2 ? 2 : 1;
@@ -381,24 +408,44 @@ undoBtn.addEventListener('click',  undo);
 
 diffSel.addEventListener('change', e => {
   difficulty = e.target.value;
+  audioManager.playSfx('ui');
 });
 
 colorSel.addEventListener('change', e => {
   playerColor = e.target.value === 'white' ? WHITE : BLACK;
+  audioManager.playSfx('ui');
   newGame();
 });
 
 langBtn.addEventListener('click', () => {
   lang = lang === 'fr' ? 'en' : 'fr';
+  audioManager.playSfx('ui');
   updateUI();
 });
 
 themeBtn.addEventListener('click', () => {
   dark = !dark;
   document.body.classList.toggle('dark', dark);
+  audioManager.playSfx('ui');
   draw();
   themeBtn.textContent = dark ? t(lang, 'themeLight') : t(lang, 'themeDark');
 });
+
+audioBtn.addEventListener('click', () => {
+  audioManager.toggleMute();
+  updateAudioIcon();
+});
+
+// Audio Unlock on first interaction
+const unlockAudio = () => {
+  audioManager.unlock();
+  window.removeEventListener('click',    unlockAudio);
+  window.removeEventListener('keydown',  unlockAudio);
+  window.removeEventListener('touchstart', unlockAudio);
+};
+window.addEventListener('click',    unlockAudio);
+window.addEventListener('keydown',  unlockAudio);
+window.addEventListener('touchstart', unlockAudio);
 
 window.addEventListener('resize', resize);
 

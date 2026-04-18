@@ -129,6 +129,12 @@ body {
   gap: 0.5rem;
 }
 
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  min-width: 40px;
+}
+
 /* ─── Premium Button Interactions ─── */
 .btn:hover {
   background: hsla(0, 0%, 100%, 0.1);
