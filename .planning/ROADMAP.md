@@ -6,13 +6,13 @@ The execution path from `gomoku-ai` to a premium "Zen" experience.
 
 Focus on the visual identity and premium "wow" factor.
 
-### Phase 1: Visual Foundation & Design System
+### Phase 1: Visual Foundation & Design System [x]
 - Setup the core "Zen" CSS tokens (Palette, Spacing, Typography) for a **Minimalist Digital** style.
 - Implement the "Glassmorphism" foundation and harmonious transitions.
 - **Localization**: Migrate primary language to **French** and remove Japanese.
 - **Deliverable**: A consistent visual theme that feels "premium".
 
-### Phase 2: Component Overhaul
+### Phase 2: Component Overhaul [x]
 - Transform buttons, selects, and panels into modern, accessible UI components.
 - Implement the "Glassmorphism" layer for controls.
 - Add micro-animations to UI interactions.
@@ -22,12 +22,12 @@ Focus on the visual identity and premium "wow" factor.
 
 Focus on the game board itself and sensory immersion.
 
-### Phase 3: Premium Stone Rendering
+### Phase 3: Premium Stone Rendering [x]
 - Upgrade the Canvas rendering engine for stones (High-fidelity gradients/shadows).
 - Add "Placement" animations (subtle bounce/settle effects).
 - **Deliverable**: Placing a stone feels satisfyingly realistic.
 
-### Phase 4: Acoustic Layer (Sound & Music)
+### Phase 4: Acoustic Layer (Sound & Music) [x]
 - Integrate a tranquil background music track and premium sound effects for stone placement.
 - Implement ambient auditory feedback for win/loss conditions.
 - **Deliverable**: A complete, immersive sensory experience.

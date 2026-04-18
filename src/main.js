@@ -37,7 +37,7 @@ const diffSel  = document.getElementById('sel-difficulty');
 const colorSel = document.getElementById('sel-color');
 
 // ── Canvas geometry ───────────────────────────────────────────────────────────
-const PADDING   = 32;
+const PADDING   = 40;
 let CELL_SIZE;
 let CANVAS_SIZE;
 
@@ -87,6 +87,21 @@ function draw() {
     ctx.moveTo(colToX(i), rowToY(0));
     ctx.lineTo(colToX(i), rowToY(BOARD_SIZE - 1));
     ctx.stroke();
+  }
+
+  // ── Axis Labels ─────────────────────────────────────────────────────────────
+  ctx.fillStyle    = dark ? 'hsla(210, 10%, 80%, 0.4)' : 'hsla(210, 10%, 20%, 0.4)';
+  ctx.font         = '10px Inter, system-ui, sans-serif';
+  ctx.textAlign    = 'center';
+  ctx.textBaseline = 'middle';
+
+  for (let i = 0; i < BOARD_SIZE; i++) {
+    // Y-Axis (1-15) - Left
+    ctx.fillText(`${i + 1}`, PADDING * 0.4, rowToY(i));
+    
+    // X-Axis (A-O) - Bottom
+    const letter = String.fromCharCode(65 + i);
+    ctx.fillText(letter, colToX(i), CANVAS_SIZE - PADDING * 0.4);
   }
 
   // Star points (standard 5-point pattern for 15×15)
